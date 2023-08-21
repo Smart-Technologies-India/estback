@@ -1,0 +1,369 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Status {
+  NONE
+  ACTIVE
+  INACTIVE
+}
+
+enum Role {
+  NONE
+  SYSTEM
+  ADMIN
+  COLLECTOR
+  DYCOLLECTOR
+  SUPERITENDANT
+  LDC
+  UDC
+  SHO
+  USER
+}
+
+enum Department {
+  NONE
+  EST
+  COLLECTOR
+  DYCOLLECTOR
+  SHO
+}
+
+enum QueryType {
+  NONE
+  INTRA
+  INTER
+  PUBLIC
+}
+
+enum QueryStatus {
+  NONE
+  SENT
+  RECEIVED
+  REPLIED
+  RESOLVED
+}
+
+enum FormType {
+  NONE
+  MARRIAGE
+  RELIGIOUS
+  ROADSHOW
+  GENERIC
+}
+
+enum Agree {
+  NONE
+  YES
+  NO
+}
+
+enum queryStatus {
+  NONE
+  SUBMIT
+  INPROCESS
+  QUERYRAISED
+  APPROVED
+  REJCTED
+  CERTIFICATEGRANT
+  COMPLETED
+}
+
+enum PaymentType {
+  NONE
+  CASH
+  CHEQUE
+  NETBANKING
+  CCDC
+  UPI
+}
+
+enum PaymentStatus {
+  NONE
+  PENDING
+  PAID
+}
+
+model user {
+  id              Int              @id @default(autoincrement())
+  name            String?
+  email           String?
+  password        String
+  contact         String?
+  pic_url         String?
+  department      Department       @default(NONE)
+  role            Role             @default(NONE)
+  otp             String?
+  status          Status           @default(NONE)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  deletedAt       DateTime?
+  to_user         query[]          @relation("touser")
+  from_user       query[]          @relation("fromuser")
+  common          common[]
+  marriage_form   marriage_form[]
+  roadshow_form   roadshow_form[]
+  religious_form  religious_form[]
+  generic_form    generic_form[]
+  userpayment     payment[]        @relation("user")
+  deptuserpayment payment[]        @relation("deptuser")
+}
+
+model village {
+  id             Int              @id @default(autoincrement())
+  name           String
+  marriage_form  marriage_form[]
+  roadshow_form  roadshow_form[]
+  religious_form religious_form[]
+  generic_form   generic_form[]
+  survey         survey[]
+}
+
+model survey {
+  id           Int       @id @default(autoincrement())
+  village      village   @relation(fields: [villageId], references: [id])
+  villageId    Int
+  survey_no    String
+  sub_division String?
+  owner_name   String
+  area         String
+  zone         String?
+  status       Status    @default(NONE)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+}
+
+model query {
+  id           Int         @id @default(autoincrement())
+  stage        FormType    @default(NONE)
+  form_id      Int
+  form_status  Int
+  to_user      user        @relation("touser", fields: [to_user_id], references: [id])
+  to_user_id   Int
+  from_user    user        @relation("fromuser", fields: [from_user_id], references: [id])
+  from_user_id Int
+  query_type   QueryType   @default(NONE)
+  doc_url      String?
+  remark       String
+  query_status QueryStatus @default(NONE)
+  status       Status      @default(NONE)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  deletedAt    DateTime?
+}
+
+model common {
+  id            Int         @id @default(autoincrement())
+  form_type     FormType    @default(NONE)
+  form_id       Int
+  user          user        @relation(fields: [user_id], references: [id])
+  user_id       Int
+  auth_user_id  String?
+  focal_user_id String?
+  intra_user_id String?
+  inter_user_id String?
+  village       String?
+  name          String
+  number        String
+  event_date    DateTime
+  form_status   Int?
+  query_status  queryStatus @default(NONE)
+  status        Status      @default(NONE)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  deletedAt     DateTime?
+}
+
+model marriage_form {
+  id                  Int       @id @default(autoincrement())
+  user                user      @relation(fields: [userId], references: [id])
+  userId              Int
+  user_uid            String?
+  name                String?
+  address             String?
+  mobile              String?
+  email               String?
+  village             village?  @relation(fields: [village_id], references: [id])
+  village_id          Int?
+  from_date           DateTime?
+  to_date             DateTime?
+  event_name          String?
+  event_address       String?
+  relation            String?
+  witness_1_url       String?
+  witness_2_url       String?
+  applicant_uid_url   String?
+  undertaking_url     String?
+  signature_url       String?
+  iagree              Agree     @default(NONE)
+  remarks             String?
+  other_remarks       String?
+  rejection_reason    String?
+  condition_to_follow String?
+  certificate_id      String?
+  certificate_date    DateTime?
+  certificate_url     String?
+  status              Status    @default(NONE)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  deletedAt           DateTime?
+}
+
+model roadshow_form {
+  id                  Int       @id @default(autoincrement())
+  user                user      @relation(fields: [userId], references: [id])
+  userId              Int
+  user_uid            String?
+  name                String?
+  address             String?
+  mobile              String?
+  email               String?
+  village             village?  @relation(fields: [village_id], references: [id])
+  village_id          Int?
+  from_date           DateTime?
+  to_date             DateTime?
+  event_name          String?
+  event_address       String?
+  route_info          String?
+  relation            String?
+  certificate_id      String?
+  certificate_date    DateTime?
+  certificate_url     String?
+  doc_1_url           String?
+  doc_2_url           String?
+  applicant_uid_url   String?
+  undertaking_url     String?
+  signature_url       String?
+  iagree              Agree     @default(NONE)
+  remarks             String?
+  other_remarks       String?
+  rejection_reason    String?
+  condition_to_follow String?
+  status              Status    @default(NONE)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  deletedAt           DateTime?
+}
+
+model religious_form {
+  id                  Int       @id @default(autoincrement())
+  user                user      @relation(fields: [userId], references: [id])
+  userId              Int
+  user_uid            String?
+  name                String?
+  address             String?
+  mobile              String?
+  email               String?
+  village             village?  @relation(fields: [village_id], references: [id])
+  village_id          Int?
+  from_date           DateTime?
+  to_date             DateTime?
+  event_name          String?
+  event_address       String?
+  route_info          String?
+  relation            String?
+  certificate_id      String?
+  certificate_date    DateTime?
+  certificate_url     String?
+  doc_1_url           String?
+  doc_2_url           String?
+  applicant_uid_url   String?
+  undertaking_url     String?
+  signature_url       String?
+  iagree              Agree     @default(NONE)
+  remarks             String?
+  other_remarks       String?
+  rejection_reason    String?
+  condition_to_follow String?
+  status              Status    @default(NONE)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  deletedAt           DateTime?
+}
+
+model generic_form {
+  id                  Int       @id @default(autoincrement())
+  user                user      @relation(fields: [userId], references: [id])
+  userId              Int
+  user_uid            String?
+  name                String?
+  address             String?
+  mobile              String?
+  email               String?
+  village             village?  @relation(fields: [village_id], references: [id])
+  village_id          Int?
+  from_date           DateTime?
+  to_date             DateTime?
+  event_name          String?
+  event_address       String?
+  route_info          String?
+  relation            String?
+  certificate_id      String?
+  certificate_date    DateTime?
+  certificate_url     String?
+  doc_1_url           String?
+  doc_2_url           String?
+  applicant_uid_url   String?
+  undertaking_url     String?
+  signature_url       String?
+  iagree              Agree     @default(NONE)
+  remarks             String?
+  other_remarks       String?
+  rejection_reason    String?
+  condition_to_follow String?
+  status              Status    @default(NONE)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  deletedAt           DateTime?
+}
+
+model dealing_hand {
+  id          Int       @id @default(autoincrement())
+  file_type   FormType  @default(NONE)
+  collector   Boolean   @default(false)
+  dycollector Boolean   @default(false)
+  suptd       Boolean   @default(false)
+  ldc         Boolean   @default(false)
+  udc         Boolean   @default(false)
+  sho         Boolean   @default(false)
+  dept1       Boolean   @default(false)
+  dept2       Boolean   @default(false)
+  dept3       Boolean   @default(false)
+  dept4       Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+}
+
+model payment {
+  id            Int           @id @default(autoincrement())
+  form_type     FormType      @default(NONE)
+  form_id       Int
+  deptuser      user          @relation("deptuser", fields: [deptuser_id], references: [id])
+  deptuser_id   Int
+  user          user          @relation("user", fields: [user_id], references: [id])
+  user_id       Int
+  type1         Int
+  amount1       Int
+  type2         Int
+  amount2       Int
+  type3         Int
+  amount3       Int
+  daycount      Int
+  paymentamout  Int
+  reference     String?
+  paymentType   PaymentType   @default(NONE)
+  paymentstatus PaymentStatus @default(NONE)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  deletedAt     DateTime?
+}

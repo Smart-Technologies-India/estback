@@ -1,0 +1,632 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: Int!
+  design_point_id: Int
+  name: String
+  email: String
+  password: String!
+  contact: String
+  otp: String
+  pic_url: String
+  access_kay: String
+  role: Role!
+  department: Department!
+  status: Status!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+enum Role {
+  NONE
+  SYSTEM
+  ADMIN
+  COLLECTOR
+  DYCOLLECTOR
+  SUPERITENDANT
+  LDC
+  UDC
+  SHO
+  USER
+}
+
+enum Department {
+  NONE
+  EST
+  COLLECTOR
+  DYCOLLECTOR
+  SHO
+}
+
+enum Status {
+  NONE
+  ACTIVE
+  INACTIVE
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Marriage {
+  id: Int!
+  userId: Int!
+  user_uid: String
+  name: String
+  email: String
+  address: String
+  mobile: String
+  village_id: Int
+  from_date: DateTime
+  to_date: DateTime
+  event_name: String
+  event_address: String
+  relation: String
+  witness_1_url: String
+  witness_2_url: String
+  applicant_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: Status
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+enum Agree {
+  NONE
+  YES
+  NO
+}
+
+type Roadshow {
+  id: Int!
+  userId: Int!
+  user_uid: String
+  name: String
+  email: String
+  address: String
+  mobile: String
+  village_id: Int
+  from_date: DateTime
+  to_date: DateTime
+  event_name: String
+  event_address: String
+  route_info: String
+  relation: String
+  doc_1_url: String
+  doc_2_url: String
+  applicant_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: Status
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type Religious {
+  id: Int!
+  userId: Int!
+  user_uid: String
+  name: String
+  email: String
+  address: String
+  mobile: String
+  village_id: Int
+  from_date: DateTime
+  to_date: DateTime
+  event_name: String
+  event_address: String
+  route_info: String
+  relation: String
+  doc_1_url: String
+  doc_2_url: String
+  applicant_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: Status
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type Auth {
+  token: String!
+  id: Int!
+  design_point_id: Int
+  name: String
+  email: String
+  password: String!
+  contact: String
+  otp: String
+  pic_url: String
+  access_kay: String
+  role: Role!
+  department: Department!
+  status: Status!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type Village {
+  id: Int!
+  name: String!
+}
+
+type QueryData {
+  id: Int!
+  stage: FormType!
+  form_id: Int!
+  form_status: Int!
+  from_user_id: Int!
+  to_user_id: Int!
+  query_type: QueryType!
+  query_status: QueryStatus!
+  remark: String!
+  doc_url: String
+  status: Status!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  from_user: User
+  to_user: User
+}
+
+enum FormType {
+  NONE
+  MARRIAGE
+  RELIGIOUS
+  ROADSHOW
+  GENERIC
+}
+
+enum QueryType {
+  NONE
+  INTRA
+  INTER
+  PUBLIC
+}
+
+enum QueryStatus {
+  NONE
+  SENT
+  RECEIVED
+  REPLIED
+  RESOLVED
+}
+
+type Common {
+  id: Int!
+  form_id: Int!
+  user_id: Int!
+  auth_user_id: String
+  focal_user_id: String
+  intra_user_id: String
+  inter_user_id: String
+  village: String!
+  name: String!
+  number: String!
+  event_date: DateTime!
+  form_status: Int!
+  form_type: FormType!
+  query_status: queryStatus!
+  status: Status!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+}
+
+enum queryStatus {
+  NONE
+  SUBMIT
+  INPROCESS
+  QUERYRAISED
+  APPROVED
+  REJCTED
+  CERTIFICATEGRANT
+  COMPLETED
+}
+
+type FileCount {
+  MARRIAGE: Int!
+  RELIGIOUS: Int!
+  ROADSHOW: Int!
+  GENERIC: Int!
+}
+
+type VillageCount {
+  count: Int!
+  village: String!
+}
+
+type OfficerCount {
+  count: Int!
+  auth_user_id: String!
+}
+
+type FileProgressDetails {
+  pending: Int!
+  completed: Int!
+  rejected: Int!
+}
+
+type FileProgress {
+  MARRIAGE: FileProgressDetails!
+  RELIGIOUS: FileProgressDetails!
+  ROADSHOW: FileProgressDetails!
+  GENERIC: FileProgressDetails!
+}
+
+type VillageProgressDetails {
+  formType: String!
+  count: Int!
+}
+
+type VillageProgress {
+  village: String!
+  fileCounts: [VillageProgressDetails!]!
+}
+
+type Query {
+  signin(loginUserInput: LoginUserInput!): Auth!
+  verifyOtp(mobileLoginInput: MobileLoginInput!): Auth!
+  getUserById(id: Int!): User!
+  getAllMarriage: [Marriage!]!
+  getMarriageById(id: Int!): Marriage!
+  getAllRoadshow: [Roadshow!]!
+  getAllRoadshowById(id: Int!): Roadshow!
+  getAllReligious: [Religious!]!
+  getReligiousById(id: Int!): Religious!
+  getAllVillage: [Village!]!
+  getVillageById(id: Int!): Village!
+  getAllQuery: [QueryData!]!
+  getQueryById(id: Int!): QueryData!
+  searchQuery(searchQueryInput: SearchQueryInput!): [QueryData!]!
+  getAllCommon: [Common!]!
+  getAllCommonById(id: Int!): Common!
+  searchCommon(searchCommonInput: SearchCommonInput!): [Common!]!
+  filterCommon(filterCommonInput: FilterCommonInput!): [Common!]!
+  getFileCount: FileCount!
+  villageFileCount: [VillageCount!]!
+  officerFileCount: [OfficerCount!]!
+  officerFileProgress: FileProgress!
+  villageFileProgress: [VillageProgress!]!
+}
+
+input LoginUserInput {
+  contact: String!
+  password: String!
+}
+
+input MobileLoginInput {
+  contact: String
+  name: String
+  otp: String
+}
+
+input SearchQueryInput {
+  stage: FormType!
+  form_id: Int!
+  user_id: Int
+  status: Status
+  query_type: QueryType
+}
+
+input SearchCommonInput {
+  form_id: Int
+  user_id: Int
+  auth_user_id: String
+  focal_user_id: String
+  intra_user_id: String
+  inter_user_id: String
+  village: String
+  name: String
+  number: String
+  event_date: DateTime
+  form_status: Int
+  form_type: FormType
+  query_status: queryStatus
+  status: Status
+  id: Int
+  deletedAt: DateTime
+}
+
+input FilterCommonInput {
+  user_type: UserType
+  user_id: Int!
+  form_type: FormType
+}
+
+enum UserType {
+  USER
+  DEPARTMENT
+}
+
+type Mutation {
+  signup(signUpUserInput: SignUpUserInput!): Auth!
+  mobileLogin(mobileLoginInput: MobileLoginInput!): Auth!
+  createMarriage(createMarriageInput: CreateMarriageInput!): Marriage!
+  updateMarriageById(updateMarriageInput: UpdateMarriageInput!): Marriage!
+  deleteMarriageById(updateMarriageInput: UpdateMarriageInput!): Marriage!
+  createRoadshow(createRoadshowInput: CreateRoadshowInput!): Roadshow!
+  updateRoadshowById(updateRoadshowInput: UpdateRoadshowInput!): Roadshow!
+  deleteRoadshowById(updateRoadshowInput: UpdateRoadshowInput!): Roadshow!
+  createReligious(createReligiousInput: CreateReligiousInput!): Religious!
+  updateReligiousById(updateReligiousInput: UpdateReligiousInput!): Religious!
+  deleteReligiousById(updateReligiousInput: UpdateReligiousInput!): Religious!
+  createQuery(createQueryInput: CreateQueryInput!): QueryData!
+  updateQueryById(updateQueryInput: UpdateQueryInput!): QueryData!
+  deleteQueryById(updateQueryInput: UpdateQueryInput!): QueryData!
+  createCommon(createCommonInput: CreateCommonInput!): Common!
+  updateCommonById(updateCommonInput: UpdateCommonInput!): Common!
+  deleteCommonById(updateCommonInput: UpdateCommonInput!): Common!
+}
+
+input SignUpUserInput {
+  name: String!
+  contact: String!
+  password: String!
+}
+
+input CreateMarriageInput {
+  userId: Int!
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  village_id: Int!
+  from_date: DateTime!
+  to_date: DateTime
+  event_name: String!
+  event_address: String!
+  relation: String
+  witness_1_url: String
+  witness_2_url: String
+  applicant_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  status: Status
+}
+
+input UpdateMarriageInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  from_date: DateTime
+  to_date: DateTime
+  event_name: String
+  event_address: String
+  relation: String
+  witness_1_url: String
+  witness_2_url: String
+  applicant_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  status: Status
+  id: Int!
+  rejection_reason: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  condition_to_follow: String
+  deletedAt: DateTime
+}
+
+input CreateRoadshowInput {
+  userId: Int!
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  village_id: Int!
+  from_date: DateTime!
+  to_date: DateTime
+  event_name: String!
+  event_address: String!
+  route_info: String
+  relation: String
+  doc_1_url: String
+  doc_2_url: String
+  applicant_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  status: Status
+}
+
+input UpdateRoadshowInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  from_date: DateTime
+  to_date: DateTime
+  event_name: String
+  event_address: String
+  route_info: String
+  relation: String
+  doc_1_url: String
+  doc_2_url: String
+  applicant_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  status: Status
+  id: Int!
+  rejection_reason: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  condition_to_follow: String
+  deletedAt: DateTime
+}
+
+input CreateReligiousInput {
+  userId: Int!
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  village_id: Int!
+  from_date: DateTime!
+  to_date: DateTime
+  event_name: String!
+  event_address: String!
+  route_info: String
+  relation: String
+  doc_1_url: String
+  doc_2_url: String
+  applicant_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  status: Status
+}
+
+input UpdateReligiousInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  from_date: DateTime
+  to_date: DateTime
+  event_name: String
+  event_address: String
+  route_info: String
+  relation: String
+  doc_1_url: String
+  doc_2_url: String
+  applicant_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  status: Status
+  id: Int!
+  rejection_reason: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  condition_to_follow: String
+  deletedAt: DateTime
+}
+
+input CreateQueryInput {
+  stage: FormType!
+  form_id: Int!
+  form_status: Int!
+  from_user_id: Int!
+  to_user_id: Int!
+  query_type: QueryType!
+  query_status: QueryStatus!
+  remark: String!
+  doc_url: String
+  status: Status
+}
+
+input UpdateQueryInput {
+  stage: FormType!
+  form_id: Int!
+  form_status: Int!
+  from_user_id: Int!
+  to_user_id: Int!
+  query_type: QueryType!
+  query_status: QueryStatus!
+  remark: String!
+  doc_url: String
+  status: Status
+  id: Int!
+  deletedAt: DateTime
+}
+
+input CreateCommonInput {
+  form_id: Int!
+  user_id: Int!
+  auth_user_id: String!
+  focal_user_id: String!
+  intra_user_id: String!
+  inter_user_id: String!
+  village: String!
+  name: String!
+  number: String!
+  event_date: DateTime!
+  form_status: Int!
+  form_type: FormType
+  query_status: queryStatus
+  status: Status
+}
+
+input UpdateCommonInput {
+  form_id: Int
+  user_id: Int
+  auth_user_id: String
+  focal_user_id: String
+  intra_user_id: String
+  inter_user_id: String
+  village: String
+  name: String
+  number: String
+  event_date: DateTime
+  form_status: Int
+  form_type: FormType
+  query_status: queryStatus
+  status: Status
+  id: Int
+  deletedAt: DateTime
+}
