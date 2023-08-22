@@ -40,7 +40,6 @@ export class RoadshowService {
 
     if (!Roadshow) throw new BadRequestException('Unable to create roadshow');
 
-    console.log(Roadshow);
     return Roadshow;
   }
 
