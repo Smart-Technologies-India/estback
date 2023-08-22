@@ -304,7 +304,7 @@ type Query {
   getAllMarriage: [Marriage!]!
   getMarriageById(id: Int!): Marriage!
   getAllRoadshow: [Roadshow!]!
-  getAllRoadshowById(id: Int!): Roadshow!
+  getRoadshowById(id: Int!): Roadshow!
   getAllReligious: [Religious!]!
   getReligiousById(id: Int!): Religious!
   getAllVillage: [Village!]!

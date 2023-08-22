@@ -14,7 +14,7 @@ export class RoadshowResolver {
   }
 
   @Query(() => Roadshow)
-  getAllRoadshowById(@Args('id', { type: () => Int }) id: number) {
+  getRoadshowById(@Args('id', { type: () => Int }) id: number) {
     return this.roadshowService.getRoadshowById(id);
   }
 

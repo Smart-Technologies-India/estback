@@ -593,7 +593,7 @@ export interface IQuery {
     getAllMarriage(): Marriage[] | Promise<Marriage[]>;
     getMarriageById(id: number): Marriage | Promise<Marriage>;
     getAllRoadshow(): Roadshow[] | Promise<Roadshow[]>;
-    getAllRoadshowById(id: number): Roadshow | Promise<Roadshow>;
+    getRoadshowById(id: number): Roadshow | Promise<Roadshow>;
     getAllReligious(): Religious[] | Promise<Religious[]>;
     getReligiousById(id: number): Religious | Promise<Religious>;
     getAllVillage(): Village[] | Promise<Village[]>;
