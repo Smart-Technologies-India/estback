@@ -130,6 +130,22 @@ export interface SignUpUserInput {
     password: string;
 }
 
+export interface UpdateUserInput {
+    exampleField?: Nullable<number>;
+    id: number;
+    name?: Nullable<string>;
+    email?: Nullable<string>;
+    password?: Nullable<string>;
+    contact?: Nullable<string>;
+    pic_url?: Nullable<string>;
+    role?: Nullable<Role>;
+    department?: Nullable<Department>;
+    address?: Nullable<string>;
+    user_uid?: Nullable<string>;
+    status?: Nullable<Status>;
+    deletedAt?: Nullable<DateTime>;
+}
+
 export interface CreateMarriageInput {
     userId: number;
     user_uid?: Nullable<string>;
@@ -365,14 +381,14 @@ export interface UpdateCommonInput {
 
 export interface User {
     id: number;
-    design_point_id?: Nullable<number>;
     name?: Nullable<string>;
     email?: Nullable<string>;
     password: string;
     contact?: Nullable<string>;
     otp?: Nullable<string>;
     pic_url?: Nullable<string>;
-    access_kay?: Nullable<string>;
+    address?: Nullable<string>;
+    user_uid?: Nullable<string>;
     role: Role;
     department: Department;
     status: Status;
@@ -615,6 +631,7 @@ export interface IQuery {
 export interface IMutation {
     signup(signUpUserInput: SignUpUserInput): Auth | Promise<Auth>;
     mobileLogin(mobileLoginInput: MobileLoginInput): Auth | Promise<Auth>;
+    updateUserById(updateUserInput: UpdateUserInput): User | Promise<User>;
     createMarriage(createMarriageInput: CreateMarriageInput): Marriage | Promise<Marriage>;
     updateMarriageById(updateMarriageInput: UpdateMarriageInput): Marriage | Promise<Marriage>;
     deleteMarriageById(updateMarriageInput: UpdateMarriageInput): Marriage | Promise<Marriage>;

@@ -10,10 +10,6 @@ export class UpdateUserInput extends PartialType(CreateUserInput) {
   id: number;
 
   @IsOptional()
-  @Field(() => Int, { nullable: true })
-  design_point_id: number;
-
-  @IsOptional()
   @Field(() => String, { nullable: true })
   name: string;
 
@@ -34,16 +30,20 @@ export class UpdateUserInput extends PartialType(CreateUserInput) {
   pic_url: string;
 
   @IsOptional()
-  @Field(() => String, { nullable: true })
-  access_kay: string;
-
-  @IsOptional()
   @Field(() => Role, { nullable: true })
   role: Role;
 
   @IsOptional()
   @Field(() => Department, { nullable: true })
   department: Department;
+
+  @IsOptional()
+  @Field(() => String, { nullable: true })
+  address: string;
+
+  @IsOptional()
+  @Field(() => String, { nullable: true })
+  user_uid: string;
 
   @IsOptional()
   @Field(() => Status, { nullable: true })

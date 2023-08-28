@@ -19,4 +19,32 @@ export class UserService {
     return user;
   }
 
+  async updateUserById(updateUserInput: UpdateUserInput) {
+    const dataToUpdate: {
+      [key: string]: any;
+    } = {};
+
+    for (const [key, value] of Object.entries(updateUserInput)) {
+      if (value) {
+        dataToUpdate[key] = value;
+      }
+    }
+
+    const existingUser = await this.prisma.user.findUnique({
+      where: { id: updateUserInput.id },
+    });
+
+    if (!existingUser) {
+      throw new NotFoundException(
+        `User with id ${updateUserInput.id} not found`,
+      );
+    }
+    delete dataToUpdate.id;
+    const updateuser = this.prisma.user.update({
+      where: { id: updateUserInput.id },
+      data: dataToUpdate,
+    });
+    if (!updateuser) throw new BadRequestException('Unable to update user.');
+    return updateuser;
+  }
 }

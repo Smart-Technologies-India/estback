@@ -4,14 +4,14 @@
 
 type User {
   id: Int!
-  design_point_id: Int
   name: String
   email: String
   password: String!
   contact: String
   otp: String
   pic_url: String
-  access_kay: String
+  address: String
+  user_uid: String
   role: Role!
   department: Department!
   status: Status!
@@ -375,6 +375,7 @@ enum UserType {
 type Mutation {
   signup(signUpUserInput: SignUpUserInput!): Auth!
   mobileLogin(mobileLoginInput: MobileLoginInput!): Auth!
+  updateUserById(updateUserInput: UpdateUserInput!): User!
   createMarriage(createMarriageInput: CreateMarriageInput!): Marriage!
   updateMarriageById(updateMarriageInput: UpdateMarriageInput!): Marriage!
   deleteMarriageById(updateMarriageInput: UpdateMarriageInput!): Marriage!
@@ -396,6 +397,23 @@ input SignUpUserInput {
   name: String!
   contact: String!
   password: String!
+}
+
+input UpdateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+  name: String
+  email: String
+  password: String
+  contact: String
+  pic_url: String
+  role: Role
+  department: Department
+  address: String
+  user_uid: String
+  status: Status
+  deletedAt: DateTime
 }
 
 input CreateMarriageInput {

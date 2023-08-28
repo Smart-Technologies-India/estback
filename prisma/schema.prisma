@@ -102,6 +102,8 @@ model user {
   department      Department       @default(NONE)
   role            Role             @default(NONE)
   otp             String?
+  address         String?
+  user_uid        String?
   status          Status           @default(NONE)
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt

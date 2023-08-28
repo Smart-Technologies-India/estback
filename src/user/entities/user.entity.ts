@@ -6,9 +6,6 @@ export class User {
   @Field(() => Int)
   id: number;
 
-  @Field(() => Int, { nullable: true })
-  design_point_id: number;
-
   @Field(() => String, { nullable: true })
   name: string;
 
@@ -28,7 +25,10 @@ export class User {
   pic_url: string;
 
   @Field(() => String, { nullable: true })
-  access_kay: string;
+  address: string;
+
+  @Field(() => String, { nullable: true })
+  user_uid: string;
 
   @Field(() => Role)
   role: Role;
