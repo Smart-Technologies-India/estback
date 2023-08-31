@@ -23,16 +23,34 @@ export class CommonService {
   }
 
   async searchCommon(common: SearchCommonInput) {
-    const results = await this.prisma.common.findMany({
-      where: common,
-      include: {
-        user: true,
-      },
-    });
+    if (common.name) {
+      const search_name = common.name;
+      delete common.name;
+      const results = await this.prisma.common.findMany({
+        where: {
+          ...common,
+          name: { contains: search_name },
+        },
+        include: {
+          user: true,
+        },
+      });
 
-    if (results.length == 0)
-      throw new BadRequestException('There is no common');
-    return results;
+      if (results.length == 0)
+        throw new BadRequestException('There is no common');
+      return results;
+    } else {
+      const results = await this.prisma.common.findMany({
+        where: common,
+        include: {
+          user: true,
+        },
+      });
+
+      if (results.length == 0)
+        throw new BadRequestException('There is no common');
+      return results;
+    }
   }
 
   async filterCommon(filter: FilterCommonInput) {
