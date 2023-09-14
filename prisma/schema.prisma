@@ -210,7 +210,7 @@ model marriage_form {
   remarks             String?
   other_remarks       String?
   rejection_reason    String?
-  condition_to_follow String?
+  condition_to_follow String?   @db.LongText
   certificate_id      String?
   certificate_date    DateTime?
   certificate_url     String?
@@ -249,7 +249,7 @@ model roadshow_form {
   remarks             String?
   other_remarks       String?
   rejection_reason    String?
-  condition_to_follow String?
+  condition_to_follow String?   @db.LongText
   status              Status    @default(NONE)
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
@@ -285,7 +285,7 @@ model religious_form {
   remarks             String?
   other_remarks       String?
   rejection_reason    String?
-  condition_to_follow String?
+  condition_to_follow String?   @db.LongText
   status              Status    @default(NONE)
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
@@ -321,7 +321,7 @@ model generic_form {
   remarks             String?
   other_remarks       String?
   rejection_reason    String?
-  condition_to_follow String?
+  condition_to_follow String?   @db.LongText
   status              Status    @default(NONE)
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
