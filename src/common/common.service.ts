@@ -17,8 +17,7 @@ export class CommonService {
     const common = await this.prisma.common.findMany({
       where: { deletedAt: null },
     });
-    if (common.length == 0)
-      throw new BadRequestException('There is no common.');
+    if (common.length == 0) throw new BadRequestException('No Entry Found.');
     return common;
   }
 
@@ -36,8 +35,7 @@ export class CommonService {
         },
       });
 
-      if (results.length == 0)
-        throw new BadRequestException('There is no common');
+      if (results.length == 0) throw new BadRequestException('No Entry Found.');
       return results;
     } else {
       const results = await this.prisma.common.findMany({
@@ -47,8 +45,7 @@ export class CommonService {
         },
       });
 
-      if (results.length == 0)
-        throw new BadRequestException('There is no common');
+      if (results.length == 0) throw new BadRequestException('No Entry Found.');
       return results;
     }
   }
