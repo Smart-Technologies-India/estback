@@ -164,6 +164,22 @@ export class CommonService {
 
     const count = await this.prisma.common.groupBy({
       by: ['form_type'],
+      where: {
+        OR: [
+          {
+            query_status: 'INPROCESS',
+          },
+          {
+            query_status: 'NONE',
+          },
+          {
+            query_status: 'QUERYRAISED',
+          },
+          {
+            query_status: 'SUBMIT',
+          },
+        ],
+      },
       _count: {
         _all: true,
       },
@@ -195,6 +211,22 @@ export class CommonService {
 
   async officerFileCount() {
     const count = await this.prisma.common.groupBy({
+      where: {
+        OR: [
+          {
+            query_status: 'INPROCESS',
+          },
+          {
+            query_status: 'NONE',
+          },
+          {
+            query_status: 'QUERYRAISED',
+          },
+          {
+            query_status: 'SUBMIT',
+          },
+        ],
+      },
       by: ['auth_user_id'],
       _count: {
         _all: true,
@@ -241,10 +273,15 @@ export class CommonService {
   async officerFileProgress() {
     const countByFormType = {};
     const formTypes = ['MARRIAGE', 'RELIGIOUS', 'ROADSHOW', 'GENERIC'];
+    // const queryStatus = [
+    //   ['NONE', 'SUBMIT', 'INPROCESS', 'QUERYRAISED'],
+    //   ['APPROVED', 'CERTIFICATEGRANT', 'COMPLETED'],
+    //   ['REJECTED'],
+    // ];
     const queryStatus = [
       ['NONE', 'SUBMIT', 'INPROCESS', 'QUERYRAISED'],
       ['APPROVED', 'CERTIFICATEGRANT', 'COMPLETED'],
-      ['REJCTED'],
+      ['REJECTED'],
     ];
 
     const count = await this.prisma.common.groupBy({
