@@ -22,7 +22,7 @@ export class AuthService {
       throw new BadRequestException('contact number already exist');
     const hashedPassword = await this.hashPassword(password);
 
-    let user = await this.prisma.user.create({
+    const user = await this.prisma.user.create({
       data: {
         password: hashedPassword,
         name: name,
@@ -61,7 +61,6 @@ export class AuthService {
 
     return { ...user, token };
   }
-
 
   async hashPassword(password: string): Promise<string> {
     const saltOrRounds = 10;
@@ -120,9 +119,8 @@ export class AuthService {
     }
 
     const res = await axios.post(
-      `http://sms.bulkssms.com/submitsms.jsp?user=PDADAMAN&key=09d6fd9fc8XX&mobile=${data.contact}&message=Dear Applicant, ${otp} is your OTP. Use this password to validate your login.PDA, Daman. &senderid=PDADMN&accusage=1&entityid=1401577610000052520&tempid=1407167343737681343`,
+      `http://sms.smartechwebworks.com/submitsms.jsp?user=ESTDAMAN&key=7670b7cc9eXX&mobile=+91${data.contact}&message=Your%20One-Time%20Password%20(${otp})%20is%20676767.%20Please%20do%20not%20share%20this%20OTP%20with%20anyone.-ESTABLISHMENT%2CCOLLECTORATE%20DAMAN.&senderid=ESTDMN&accusage=1&entityid=1701175448046997959&tempid=1707175473102089564`,
     );
-
 
     if (res.data.toString().split(',')[0].trim() == 'sent') {
       return userdata;
@@ -156,7 +154,7 @@ export class AuthService {
   }
 
   generateOTP(): string {
-    var digits = '0123456789';
+    const digits = '0123456789';
     let OTP = '';
     for (let i = 0; i < 4; i++) {
       OTP += digits[Math.floor(Math.random() * 10)];
