@@ -119,7 +119,7 @@ export class AuthService {
     }
 
     const res = await axios.post(
-      `http://sms.smartechwebworks.com/submitsms.jsp?user=ESTDAMAN&key=7670b7cc9eXX&mobile=+91${data.contact}&message=Your%20One-Time%20Password%20(${otp})%20is%20676767.%20Please%20do%20not%20share%20this%20OTP%20with%20anyone.-ESTABLISHMENT%2CCOLLECTORATE%20DAMAN.&senderid=ESTDMN&accusage=1&entityid=1701175448046997959&tempid=1707175473102089564`,
+      `http://sms.smartechwebworks.com/submitsms.jsp?user=ESTDAMAN&key=7670b7cc9eXX&mobile=+91${data.contact}&message=Your%20One-Time%20Password%20(OTP)%20is%20${otp}.%20Please%20do%20not%20share%20this%20OTP%20with%20anyone.-ESTABLISHMENT%2CCOLLECTORATE%20DAMAN.&senderid=ESTDMN&accusage=1&entityid=1701175448046997959&tempid=1707175473102089564`,
     );
 
     if (res.data.toString().split(',')[0].trim() == 'sent') {
