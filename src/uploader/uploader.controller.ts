@@ -55,7 +55,7 @@ export class UploaderController {
       response.send(res);
       response.end();
     }
-    const filePath = `/public/images/${file.filename}`;
+    const filePath = `/a/public/images/${file.filename}`;
 
     const filename = `${req.protocol}://${req.get('Host')}${filePath.replace(
       /\\/g,

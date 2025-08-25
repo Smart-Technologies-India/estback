@@ -5,6 +5,7 @@ import { IsNotEmpty, IsOptional } from 'class-validator';
 registerEnumType(Agree, {
   name: 'Agree',
 });
+
 registerEnumType(Status, {
   name: 'Status',
 });
