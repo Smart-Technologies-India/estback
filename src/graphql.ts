@@ -112,7 +112,7 @@ export interface SearchCommonInput {
     event_date?: Nullable<DateTime>;
     form_status?: Nullable<number>;
     form_type?: Nullable<FormType>;
-    query_status?: Nullable<queryStatus>;
+    query_status?: Nullable<QueryStatus>;
     status?: Nullable<Status>;
     id?: Nullable<number>;
     deletedAt?: Nullable<DateTime>;
@@ -356,7 +356,7 @@ export interface CreateCommonInput {
     event_date: DateTime;
     form_status: number;
     form_type?: Nullable<FormType>;
-    query_status?: Nullable<queryStatus>;
+    query_status?: Nullable<QueryStatus>;
     status?: Nullable<Status>;
 }
 
@@ -373,7 +373,7 @@ export interface UpdateCommonInput {
     event_date?: Nullable<DateTime>;
     form_status?: Nullable<number>;
     form_type?: Nullable<FormType>;
-    query_status?: Nullable<queryStatus>;
+    query_status?: Nullable<QueryStatus>;
     status?: Nullable<Status>;
     id?: Nullable<number>;
     deletedAt?: Nullable<DateTime>;
@@ -555,7 +555,7 @@ export interface Common {
     event_date: DateTime;
     form_status: number;
     form_type: FormType;
-    query_status: queryStatus;
+    query_status: QueryStatus;
     status: Status;
     createdAt: DateTime;
     updatedAt: DateTime;
