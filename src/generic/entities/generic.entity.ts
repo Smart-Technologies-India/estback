@@ -2,7 +2,7 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Agree, Status } from '@prisma/client';
 
 @ObjectType()
-export class Religious {
+export class Generic {
   @Field(() => Int)
   id: number;
 

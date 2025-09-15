@@ -1,98 +1,94 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { InputType, Int, Field } from '@nestjs/graphql';
 import { Agree, Status } from '@prisma/client';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
-@ObjectType()
-export class Religious {
-  @Field(() => Int)
-  id: number;
-
+@InputType()
+export class CreateGenericInput {
+  @IsNotEmpty()
   @Field(() => Int)
   userId: number;
 
+  @IsOptional()
   @Field(() => String, { nullable: true })
   user_uid: string;
 
-  @Field(() => String, { nullable: true })
+  @IsNotEmpty()
+  @Field(() => String)
   name: string;
 
+  @IsNotEmpty()
+  @Field(() => String)
+  address: string;
+
+  @IsNotEmpty()
+  @Field(() => String)
+  mobile: string;
+
+  @IsOptional()
   @Field(() => String, { nullable: true })
   email: string;
 
-  @Field(() => String, { nullable: true })
-  address: string;
-
-  @Field(() => String, { nullable: true })
-  mobile: string;
-
-  @Field(() => Int, { nullable: true })
+  @IsNotEmpty()
+  @Field(() => Int)
   village_id: number;
 
-  @Field(() => Date, { nullable: true })
+  @IsNotEmpty()
+  @Field(() => Date)
   from_date: Date;
 
+  @IsOptional()
   @Field(() => Date, { nullable: true })
   to_date: Date;
 
-  @Field(() => String, { nullable: true })
+  @IsNotEmpty()
+  @Field(() => String)
   event_name: string;
 
-  @Field(() => String, { nullable: true })
+  @IsNotEmpty()
+  @Field(() => String)
   event_address: string;
 
+  @IsOptional()
   @Field(() => String, { nullable: true })
   route_info: string;
 
+  @IsOptional()
   @Field(() => String, { nullable: true })
   relation: string;
 
+  @IsOptional()
   @Field(() => String, { nullable: true })
   doc_1_url: string;
 
+  @IsOptional()
   @Field(() => String, { nullable: true })
   doc_2_url: string;
 
+  @IsOptional()
   @Field(() => String, { nullable: true })
   applicant_uid_url: string;
 
+  @IsOptional()
   @Field(() => String, { nullable: true })
   undertaking_url: string;
 
+  @IsOptional()
   @Field(() => String, { nullable: true })
   signature_url: string;
 
-  @Field(() => Agree)
+  @IsOptional()
+  @Field(() => Agree, { nullable: true })
   iagree: Agree;
 
+  @IsOptional()
   @Field(() => String, { nullable: true })
   remarks: string;
 
+  @IsOptional()
   @Field(() => String, { nullable: true })
   other_remarks: string;
 
-  @Field(() => String, { nullable: true })
-  rejection_reason: string;
-
-  @Field(() => String, { nullable: true })
-  condition_to_follow: string;
-
+  @IsOptional()
   @Field(() => Status, { nullable: true })
-  certificate_id: string;
-
-  @Field(() => Date, { nullable: true })
-  certificate_date: Date;
-
-  @Field(() => String, { nullable: true })
-  certificate_url: string;
-
-  @Field(() => Status)
   status: Status;
-
-  @Field(() => Date)
-  createdAt: Date;
-
-  @Field(() => Date)
-  updatedAt: Date;
-
-  @Field(() => Date, { nullable: true })
-  deletedAt: Date;
 }

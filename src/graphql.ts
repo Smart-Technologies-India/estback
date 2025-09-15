@@ -379,6 +379,63 @@ export interface UpdateCommonInput {
     deletedAt?: Nullable<DateTime>;
 }
 
+export interface CreateGenericInput {
+    userId: number;
+    user_uid?: Nullable<string>;
+    name: string;
+    address: string;
+    mobile: string;
+    email?: Nullable<string>;
+    village_id: number;
+    from_date: DateTime;
+    to_date?: Nullable<DateTime>;
+    event_name: string;
+    event_address: string;
+    route_info?: Nullable<string>;
+    relation?: Nullable<string>;
+    doc_1_url?: Nullable<string>;
+    doc_2_url?: Nullable<string>;
+    applicant_uid_url?: Nullable<string>;
+    undertaking_url?: Nullable<string>;
+    signature_url?: Nullable<string>;
+    iagree?: Nullable<Agree>;
+    remarks?: Nullable<string>;
+    other_remarks?: Nullable<string>;
+    status?: Nullable<Status>;
+}
+
+export interface UpdateGenericInput {
+    userId?: Nullable<number>;
+    user_uid?: Nullable<string>;
+    name?: Nullable<string>;
+    address?: Nullable<string>;
+    mobile?: Nullable<string>;
+    email?: Nullable<string>;
+    village_id?: Nullable<number>;
+    from_date?: Nullable<DateTime>;
+    to_date?: Nullable<DateTime>;
+    event_name?: Nullable<string>;
+    event_address?: Nullable<string>;
+    route_info?: Nullable<string>;
+    relation?: Nullable<string>;
+    doc_1_url?: Nullable<string>;
+    doc_2_url?: Nullable<string>;
+    applicant_uid_url?: Nullable<string>;
+    undertaking_url?: Nullable<string>;
+    signature_url?: Nullable<string>;
+    iagree?: Nullable<Agree>;
+    remarks?: Nullable<string>;
+    other_remarks?: Nullable<string>;
+    status?: Nullable<Status>;
+    id: number;
+    rejection_reason?: Nullable<string>;
+    certificate_id?: Nullable<string>;
+    certificate_date?: Nullable<DateTime>;
+    certificate_url?: Nullable<string>;
+    condition_to_follow?: Nullable<string>;
+    deletedAt?: Nullable<DateTime>;
+}
+
 export interface User {
     id: number;
     name?: Nullable<string>;
@@ -602,6 +659,40 @@ export interface VillageProgress {
     fileCounts: VillageProgressDetails[];
 }
 
+export interface Generic {
+    id: number;
+    userId: number;
+    user_uid?: Nullable<string>;
+    name?: Nullable<string>;
+    email?: Nullable<string>;
+    address?: Nullable<string>;
+    mobile?: Nullable<string>;
+    village_id?: Nullable<number>;
+    from_date?: Nullable<DateTime>;
+    to_date?: Nullable<DateTime>;
+    event_name?: Nullable<string>;
+    event_address?: Nullable<string>;
+    route_info?: Nullable<string>;
+    relation?: Nullable<string>;
+    doc_1_url?: Nullable<string>;
+    doc_2_url?: Nullable<string>;
+    applicant_uid_url?: Nullable<string>;
+    undertaking_url?: Nullable<string>;
+    signature_url?: Nullable<string>;
+    iagree: Agree;
+    remarks?: Nullable<string>;
+    other_remarks?: Nullable<string>;
+    rejection_reason?: Nullable<string>;
+    condition_to_follow?: Nullable<string>;
+    certificate_id?: Nullable<Status>;
+    certificate_date?: Nullable<DateTime>;
+    certificate_url?: Nullable<string>;
+    status: Status;
+    createdAt: DateTime;
+    updatedAt: DateTime;
+    deletedAt?: Nullable<DateTime>;
+}
+
 export interface IQuery {
     signin(loginUserInput: LoginUserInput): Auth | Promise<Auth>;
     verifyOtp(mobileLoginInput: MobileLoginInput): Auth | Promise<Auth>;
@@ -626,6 +717,8 @@ export interface IQuery {
     officerFileCount(): OfficerCount[] | Promise<OfficerCount[]>;
     officerFileProgress(): FileProgress | Promise<FileProgress>;
     villageFileProgress(): VillageProgress[] | Promise<VillageProgress[]>;
+    getAllGenerics(): Generic[] | Promise<Generic[]>;
+    getGenericById(id: number): Generic | Promise<Generic>;
 }
 
 export interface IMutation {
@@ -647,6 +740,9 @@ export interface IMutation {
     createCommon(createCommonInput: CreateCommonInput): Common | Promise<Common>;
     updateCommonById(updateCommonInput: UpdateCommonInput): Common | Promise<Common>;
     deleteCommonById(updateCommonInput: UpdateCommonInput): Common | Promise<Common>;
+    createGeneric(createGenericInput: CreateGenericInput): Generic | Promise<Generic>;
+    updateGenericById(updateGenericInput: UpdateGenericInput): Generic | Promise<Generic>;
+    deleteGenericById(updateGenericInput: UpdateGenericInput): Generic | Promise<Generic>;
 }
 
 export type DateTime = any;

@@ -77,7 +77,7 @@ export class CommonService {
         whereClause.form_type = filter.form_type;
       }
       const result = await this.prisma.common.findMany({
-        where: whereClause,
+        where: { ...whereClause, deletedAt: null },
       });
       if (result.length == 0)
         throw new NotFoundException(`NO Common data found for this user. `);
@@ -85,6 +85,50 @@ export class CommonService {
       return result;
     }
   }
+
+  // async getShoApprovedFiles(filter: FilterCommonInput) {
+  //   const query = await this.prisma.query.findMany({
+  //     where: {
+  //       to_user_id: filter.user_id,
+  //       deletedAt: null,
+  //     },
+  //   });
+
+  //   const queryids = query.map((q) => q.form_id);
+  //   // if (filter.user_type == UserType.USER) {
+  //   //   const whereClause: any = { user_id: filter.user_id };
+
+  //   //   if (filter.form_type !== null && filter.form_type !== undefined) {
+  //   //     whereClause.form_type = filter.form_type;
+  //   //   }
+  //   //   const result = await this.prisma.common.findMany({
+  //   //     where: whereClause,
+  //   //   });
+  //   //   if (result.length == 0)
+  //   //     throw new NotFoundException(`NO Common data found for this user. `);
+  //   //   return result;
+  //   // } else {
+  //   //   const whereClause: any = {
+  //   //     OR: [
+  //   //       { auth_user_id: { contains: filter.user_id.toString() } },
+  //   //       { focal_user_id: { contains: filter.user_id.toString() } },
+  //   //       { intra_user_id: { contains: filter.user_id.toString() } },
+  //   //       { inter_user_id: { contains: filter.user_id.toString() } },
+  //   //     ],
+  //   //   };
+
+  //   //   if (filter.form_type !== null && filter.form_type !== undefined) {
+  //   //     whereClause.form_type = filter.form_type;
+  //   //   }
+  //   //   const result = await this.prisma.common.findMany({
+  //   //     where: { ...whereClause, deletedAt: null },
+  //   //   });
+  //   //   if (result.length == 0)
+  //   //     throw new NotFoundException(`NO Common data found for this user. `);
+
+  //   //   return result;
+  //   // }
+  // }
 
   async getAllCommonById(id: number) {
     const common = await this.prisma.common.findFirst({
@@ -97,8 +141,22 @@ export class CommonService {
   async createCommon(common: CreateCommonInput) {
     const dataToCreate: any = {};
 
+    const isExist = await this.prisma.common.findFirst({
+      where: {
+        form_id: common.form_id,
+        user_id: common.user_id,
+        deletedAt: null,
+      },
+    });
+
+    if (isExist) {
+      throw new BadRequestException(
+        'Common entry already exists for this form and user.',
+      );
+    }
+
     for (const [key, value] of Object.entries(common)) {
-      if (value) {
+      if (value != null && value !== undefined) {
         dataToCreate[key] = value;
       }
     }
@@ -179,6 +237,7 @@ export class CommonService {
             query_status: 'SUBMIT',
           },
         ],
+        deletedAt: null,
       },
       _count: {
         _all: true,

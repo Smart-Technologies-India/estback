@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateReligiousInput } from './dto/create-religious.input';
 import { UpdateReligiousInput } from './dto/update-religious.input';
 import { PrismaService } from 'prisma/prisma.service';

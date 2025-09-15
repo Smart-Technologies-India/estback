@@ -9,7 +9,7 @@ import {
 import { UploaderService } from './uploader.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { join } from 'path';
+// import { join } from 'path';
 import { Request, Response } from 'express';
 
 interface response {
@@ -29,7 +29,7 @@ export class UploaderController {
       storage: diskStorage({
         destination: './public/images/',
         filename: (req, file, cb) => {
-          const mypath = join('./', 'public/images');
+          // const mypath = join('./', 'public/images');
           const originalname = file.originalname;
           const extension = originalname.split('.').pop();
           const truncatedName = originalname.substring(0, 10);

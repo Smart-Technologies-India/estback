@@ -297,6 +297,40 @@ type VillageProgress {
   fileCounts: [VillageProgressDetails!]!
 }
 
+type Generic {
+  id: Int!
+  userId: Int!
+  user_uid: String
+  name: String
+  email: String
+  address: String
+  mobile: String
+  village_id: Int
+  from_date: DateTime
+  to_date: DateTime
+  event_name: String
+  event_address: String
+  route_info: String
+  relation: String
+  doc_1_url: String
+  doc_2_url: String
+  applicant_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: Status
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
 type Query {
   signin(loginUserInput: LoginUserInput!): Auth!
   verifyOtp(mobileLoginInput: MobileLoginInput!): Auth!
@@ -321,6 +355,8 @@ type Query {
   officerFileCount: [OfficerCount!]!
   officerFileProgress: FileProgress!
   villageFileProgress: [VillageProgress!]!
+  getAllGenerics: [Generic!]!
+  getGenericById(id: Int!): Generic!
 }
 
 input LoginUserInput {
@@ -391,6 +427,9 @@ type Mutation {
   createCommon(createCommonInput: CreateCommonInput!): Common!
   updateCommonById(updateCommonInput: UpdateCommonInput!): Common!
   deleteCommonById(updateCommonInput: UpdateCommonInput!): Common!
+  createGeneric(createGenericInput: CreateGenericInput!): Generic!
+  updateGenericById(updateGenericInput: UpdateGenericInput!): Generic!
+  deleteGenericById(updateGenericInput: UpdateGenericInput!): Generic!
 }
 
 input SignUpUserInput {
@@ -646,5 +685,62 @@ input UpdateCommonInput {
   query_status: queryStatus
   status: Status
   id: Int
+  deletedAt: DateTime
+}
+
+input CreateGenericInput {
+  userId: Int!
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  village_id: Int!
+  from_date: DateTime!
+  to_date: DateTime
+  event_name: String!
+  event_address: String!
+  route_info: String
+  relation: String
+  doc_1_url: String
+  doc_2_url: String
+  applicant_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  status: Status
+}
+
+input UpdateGenericInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  from_date: DateTime
+  to_date: DateTime
+  event_name: String
+  event_address: String
+  route_info: String
+  relation: String
+  doc_1_url: String
+  doc_2_url: String
+  applicant_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  status: Status
+  id: Int!
+  rejection_reason: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  condition_to_follow: String
   deletedAt: DateTime
 }

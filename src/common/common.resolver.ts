@@ -39,6 +39,13 @@ export class CommonResolver {
     return this.commonService.filterCommon(filterCommonInput);
   }
 
+  // @Query(() => [Common])
+  // getShoApprovedFiles(
+  //   @Args('filterCommonInput') filterCommonInput: FilterCommonInput,
+  // ) {
+  //   return this.commonService.getShoApprovedFiles(filterCommonInput);
+  // }
+
   @Mutation(() => Common)
   createCommon(
     @Args('createCommonInput') createCommonInput: CreateCommonInput,

@@ -15,6 +15,7 @@ import { VillageModule } from './village/village.module';
 import { UploaderModule } from './uploader/uploader.module';
 import { QueryModule } from './query/query.module';
 import { CommonModule } from './common/common.module';
+import { GenericModule } from './generic/generic.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { CommonModule } from './common/common.module';
     UploaderModule,
     QueryModule,
     CommonModule,
+    GenericModule,
   ],
   controllers: [AppController],
   providers: [AppService],
