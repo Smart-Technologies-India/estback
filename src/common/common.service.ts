@@ -415,4 +415,92 @@ export class CommonService {
     });
     return formattedResult;
   }
+
+  async downloadReport() {
+    // 1. Fetch all forms (filtering deletedAt)
+    const marriageForms = await this.prisma.marriage_form.findMany({
+      where: { deletedAt: null },
+    });
+    const religiousForms = await this.prisma.religious_form.findMany({
+      where: { deletedAt: null },
+    });
+    const roadshowForms = await this.prisma.roadshow_form.findMany({
+      where: { deletedAt: null },
+    });
+    const genericForms = await this.prisma.generic_form.findMany({
+      where: { deletedAt: null },
+    });
+
+    // 2. Fetch relevant commons
+    const commons = await this.prisma.common.findMany({
+      where: {
+        OR: [
+          {
+            form_type: { in: ['RELIGIOUS', 'ROADSHOW', 'GENERIC'] },
+            form_status: 225,
+          },
+          { form_type: 'MARRIAGE', form_status: 175 },
+        ],
+        createdAt: {
+          gte: new Date(new Date().setDate(new Date().getDate() - 30)), // last 30 days
+        },
+      },
+      orderBy: {
+        event_date: 'asc',
+      },
+    });
+
+    // 3. Create lookup maps for fast access
+    const marriageMap = new Map(marriageForms.map((m) => [m.id, m]));
+    const religiousMap = new Map(religiousForms.map((r) => [r.id, r]));
+    const roadshowMap = new Map(roadshowForms.map((r) => [r.id, r]));
+    const genericMap = new Map(genericForms.map((g) => [g.id, g]));
+
+    // 4. Transform commons + match with correct form
+    const grouped: Record<string, any[]> = {};
+    commons.forEach((c) => {
+      let formData: any = null;
+      if (c.form_type === 'MARRIAGE') formData = marriageMap.get(c.form_id);
+      if (c.form_type === 'RELIGIOUS') formData = religiousMap.get(c.form_id);
+      if (c.form_type === 'ROADSHOW') formData = roadshowMap.get(c.form_id);
+      if (c.form_type === 'GENERIC') formData = genericMap.get(c.form_id);
+
+      const row = {
+        applicantName: c.name,
+        applicantAddress: formData?.address ?? '',
+        applicationDate: c.event_date
+          ? new Date(c.event_date).toISOString().split('T')[0]
+          : '',
+        eventName: formData?.event_name ?? '',
+        permissionAddress: formData?.event_address ?? '',
+        permissionDate:
+          formData?.from_date && formData?.to_date
+            ? `${new Date(formData.from_date).toISOString().split('T')[0]} to ${new Date(formData.to_date).toISOString().split('T')[0]}`
+            : '',
+        routeInfo: formData?.route_info ?? '',
+        mobile: c.number ?? formData?.mobile ?? '',
+        email: formData?.email ?? '',
+        relation: formData?.relation ?? '',
+        formType: c.form_type,
+      };
+
+      if (!grouped[c.form_type]) grouped[c.form_type] = [];
+      grouped[c.form_type].push(row);
+    });
+
+    // 5. Add row numbers (like ROW_NUMBER OVER PARTITION BY)
+    const finalRows: any[] = [];
+
+    let val = 1;
+    for (const [, list] of Object.entries(grouped)) {
+      list.forEach((r) => {
+        finalRows.push({
+          srNo: val++,
+          ...r,
+        });
+      });
+    }
+
+    return finalRows;
+  }
 }

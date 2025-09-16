@@ -297,6 +297,21 @@ type VillageProgress {
   fileCounts: [VillageProgressDetails!]!
 }
 
+type ReportData {
+  srNo: Int!
+  applicantName: String!
+  applicantAddress: String!
+  applicationDate: String!
+  eventName: String!
+  permissionAddress: String!
+  permissionDate: String!
+  routeInfo: String!
+  mobile: String!
+  email: String!
+  relation: String!
+  formType: String!
+}
+
 type Generic {
   id: Int!
   userId: Int!
@@ -355,6 +370,7 @@ type Query {
   officerFileCount: [OfficerCount!]!
   officerFileProgress: FileProgress!
   villageFileProgress: [VillageProgress!]!
+  downloadReport: [ReportData!]!
   getAllGenerics: [Generic!]!
   getGenericById(id: Int!): Generic!
 }

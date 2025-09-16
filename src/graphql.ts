@@ -659,6 +659,21 @@ export interface VillageProgress {
     fileCounts: VillageProgressDetails[];
 }
 
+export interface ReportData {
+    srNo: number;
+    applicantName: string;
+    applicantAddress: string;
+    applicationDate: string;
+    eventName: string;
+    permissionAddress: string;
+    permissionDate: string;
+    routeInfo: string;
+    mobile: string;
+    email: string;
+    relation: string;
+    formType: string;
+}
+
 export interface Generic {
     id: number;
     userId: number;
@@ -717,6 +732,7 @@ export interface IQuery {
     officerFileCount(): OfficerCount[] | Promise<OfficerCount[]>;
     officerFileProgress(): FileProgress | Promise<FileProgress>;
     villageFileProgress(): VillageProgress[] | Promise<VillageProgress[]>;
+    downloadReport(): ReportData[] | Promise<ReportData[]>;
     getAllGenerics(): Generic[] | Promise<Generic[]>;
     getGenericById(id: number): Generic | Promise<Generic>;
 }
