@@ -97,4 +97,9 @@ export class CommonResolver {
   downloadReport() {
     return this.commonService.downloadReport();
   }
+
+  @Query(() => [ReportData])
+  downloadPendingReport() {
+    return this.commonService.downloadPendingReport();
+  }
 }

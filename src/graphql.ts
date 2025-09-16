@@ -733,6 +733,7 @@ export interface IQuery {
     officerFileProgress(): FileProgress | Promise<FileProgress>;
     villageFileProgress(): VillageProgress[] | Promise<VillageProgress[]>;
     downloadReport(): ReportData[] | Promise<ReportData[]>;
+    downloadPendingReport(): ReportData[] | Promise<ReportData[]>;
     getAllGenerics(): Generic[] | Promise<Generic[]>;
     getGenericById(id: number): Generic | Promise<Generic>;
 }
