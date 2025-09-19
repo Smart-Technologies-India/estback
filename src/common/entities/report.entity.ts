@@ -37,4 +37,10 @@ export class ReportData {
 
   @Field(() => String)
   formType: string; // 'Form Type'
+
+  @Field(() => String)
+  queryStatus: string; // 'Query Status'
+
+  @Field(() => String)
+  authUserId: string; // 'Auth User ID'
 }

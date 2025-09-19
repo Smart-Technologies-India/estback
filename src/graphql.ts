@@ -672,6 +672,8 @@ export interface ReportData {
     email: string;
     relation: string;
     formType: string;
+    queryStatus: string;
+    authUserId: string;
 }
 
 export interface Generic {

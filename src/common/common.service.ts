@@ -503,6 +503,23 @@ export class CommonService {
     return finalRows;
   }
   async downloadPendingReport() {
+    const authusertorole = (id: string) => {
+      switch (id) {
+        case '3':
+          return 'Collector';
+
+        case '4':
+          return 'Dy.Collector';
+        case '5':
+          return 'Suptd';
+        case '6':
+          return 'LDC';
+        case '8':
+          return 'SDPO';
+        default:
+          return 'Suptd';
+      }
+    };
     // 1. Fetch all forms (filtering deletedAt)
     const marriageForms = await this.prisma.marriage_form.findMany({
       where: { deletedAt: null },
@@ -523,7 +540,7 @@ export class CommonService {
         OR: [
           {
             form_type: { in: ['RELIGIOUS', 'ROADSHOW', 'GENERIC', 'MARRIAGE'] },
-            form_status: 150,
+            // form_status: 150,
           },
         ],
         createdAt: {
@@ -567,6 +584,8 @@ export class CommonService {
         email: formData?.email ?? '',
         relation: formData?.relation ?? '',
         formType: c.form_type,
+        queryStatus: c.query_status.toString(),
+        authUserId: authusertorole(c.auth_user_id.toString()),
       };
 
       if (!grouped[c.form_type]) grouped[c.form_type] = [];

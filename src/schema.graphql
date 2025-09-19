@@ -310,6 +310,8 @@ type ReportData {
   email: String!
   relation: String!
   formType: String!
+  queryStatus: String!
+  authUserId: String!
 }
 
 type Generic {
