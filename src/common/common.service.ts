@@ -443,6 +443,7 @@ export class CommonService {
         createdAt: {
           gte: new Date(new Date().setDate(new Date().getDate() - 30)), // last 30 days
         },
+        deletedAt: null,
       },
       orderBy: {
         event_date: 'asc',
@@ -546,6 +547,7 @@ export class CommonService {
         createdAt: {
           gte: new Date(new Date().setDate(new Date().getDate() - 30)), // last 30 days
         },
+        deletedAt: null,
       },
       orderBy: {
         event_date: 'asc',
